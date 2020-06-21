@@ -1,0 +1,58 @@
+/*
+ * ssd1322.h
+ *
+ *  Created on: 13 июн. 2020 г.
+ *      Author: rd3tal
+ */
+
+#ifndef SSD1322_SSD1322_H_
+#define SSD1322_SSD1322_H_
+
+#include "ugui.h"
+#define PIN_COM     (GPIOB->BSRR |=GPIO_BSRR_BR_12)
+#define PIN_DATA     (GPIOB->BSRR |=GPIO_BSRR_BS_12)
+#define PIN_RES_OFF     (GPIOB->BSRR |=GPIO_BSRR_BS_11)
+#define PIN_RES_ON     (GPIOB->BSRR |=GPIO_BSRR_BR_11)
+
+
+
+#define CMD_ENABLE_GRAY_SCALE_TABLE			0x00
+#define CMD_SET_COLUMN_ADDR					0x15
+#define CMD_WRITE_RAM						0x5C
+#define CMD_READ_RAM						0x5D
+#define CMD_SET_ROW_ADDR					0x75
+#define CMD_SET_REMAP						0xA0
+#define CMD_SET_DISPLAY_START_LINE			0xA1
+#define CMD_SET_DISPLAY_OFFSET				0xA2
+#define CMD_SET_DISPLAY_MODE_OFF			0xA4
+#define CMD_SET_DISPLAY_MODE_ON				0xA5
+#define CMD_SET_DISPLAY_MODE_NORMAL			0xA6
+#define CMD_SET_DISPLAY_MODE_INVERSE		0xA7
+#define CMD_ENABLE_PARTIAL_DISPLAY			0xA8
+#define CMD_EXIT_PARTIAL_DISPLAY			0xA9
+#define CMD_SET_FUNCTION_SELECTION			0xAB
+#define CMD_SET_DISPLAY_OFF					0xAE
+#define CMD_SET_DISPLAY_ON					0xAF
+#define CMD_SET_PHASE_LENGTH				0xB1
+#define CMD_SET_CLOCK_DIVIDER				0xB3
+#define CMD_DISPLAY_ENHANCEMENT				0xB4
+#define CMD_SET_GPIO						0xB5
+#define CMD_SET_SECOND_PRECHARGE_PERIOD		0xB6
+#define CMD_SET_GRAY_SCALE_TABLE			0xB8
+#define CMD_SET_PRECHARGE_VOLTAGE			0xBB
+#define CMD_SET_DEFAULT_LINEAR_GRAY_SCALE_TABLE	0xB9
+#define CMD_SET_VCOMH_VOLTAGE				0xBE
+#define CMD_SET_CONTRAST_CURRENT			0xC1
+#define CMD_MASTER_CURRENT_CONTROL			0xC7
+#define CMD_SET_MULTIPLEX_RATIO				0xCA
+#define CMD_DISPLAY_ENHANCEMENT_B			0xD1
+#define CMD_SET_COMMAND_LOCK				0xFD
+
+
+
+void ssd1322_pset(UG_S16 x, UG_S16 y, UG_COLOR c);
+void lcd_init(void);
+void update_display( void );
+
+
+#endif /* SSD1322_SSD1322_H_ */
