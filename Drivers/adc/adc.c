@@ -5,10 +5,8 @@
  *      Author: rd3tal
  */
 
-#include "stm32f3xx.h"
 #include"systick.h"
 #include"adc.h"
-#include "fft.h"
 
 #define x0 0x7ff
 #define x16 140

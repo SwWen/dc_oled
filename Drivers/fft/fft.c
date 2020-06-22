@@ -1,6 +1,5 @@
-#include "stm32f3xx.h"
-#include "arm_math.h"
 #include "ad7792.h"
+#include "arm_math.h"
 #include "fft.h"
 #include "math.h"
 #include "arm_const_structs.h"
