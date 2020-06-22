@@ -8,7 +8,6 @@
 #include "spi.h"
 #include "systick.h"
 float32_t fft_Sbuff[FFT_SIZE * 2] = { 0 };
-//float32_t fft_Dbuff[FFT_SIZE] = { 0 };
 uint32_t ifftFlag = 0;
 uint32_t doBitReverse = 1;
 float32_t dfreq = 0,test=0;
