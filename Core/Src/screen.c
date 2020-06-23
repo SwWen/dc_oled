@@ -11,6 +11,8 @@
 	UG_GUI gui;
 	data dt;
 	char buf[100];
+
+
 void gui_init(void){
 	UG_Init(&gui, ssd1322_pset,256,64);
 	UG_FontSelect(&FONT_10X16) ;
