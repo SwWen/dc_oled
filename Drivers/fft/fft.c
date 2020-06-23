@@ -1,6 +1,5 @@
-#include "stm32f3xx.h"
-#include "arm_math.h"
 #include "ad7792.h"
+#include "arm_math.h"
 #include "fft.h"
 #include "math.h"
 #include "arm_const_structs.h"
@@ -8,7 +7,6 @@
 #include "spi.h"
 #include "systick.h"
 float32_t fft_Sbuff[FFT_SIZE * 2] = { 0 };
-//float32_t fft_Dbuff[FFT_SIZE] = { 0 };
 uint32_t ifftFlag = 0;
 uint32_t doBitReverse = 1;
 float32_t dfreq = 0,test=0;
@@ -47,7 +45,7 @@ if((max_result/FFT_SIZE>15000)&&(amp!=0)){
 		rms=PI*dt->fft_Dbuff[max_index]*dfreq*(1-(dfreq*dfreq));
 		rms=rms/sinf(PI*dfreq);
 
-float32_t ma=170,md=9.0;
+float32_t ma=170,md=11.4;
 dt->Vpp=(rms/ma)/powf(2,amp);
 dt->Vamp=dt->Vpp/2;
 dt->Vrms=dt->Vpp/2/1.41;

@@ -100,8 +100,12 @@ static uint8_t mod;
 
 
 	UG_FontSelect(&FONT_6X10);
-	sprintf(buf, "Va\n%.2f", dt->Vamp);
+	sprintf(buf, "\n%.2f", dt->Vamp);
 	UG_PutString(150, 44, buf);
+	UG_FontSelect(&FONT_8X14);
+	sprintf(buf, "Va");
+	UG_PutString(150, 40, buf);
+
 
 	UG_FontSelect(&FONT_12X16);
 	sprintf(buf, "  Hz\n%.2f", dt->freq);

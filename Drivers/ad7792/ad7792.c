@@ -1,6 +1,5 @@
 #include "ad7792.h"
 #include "spi.h"
-#include "stm32f3xx.h"
 #include "systick.h"
 
 void ad7792_reset(void) {
