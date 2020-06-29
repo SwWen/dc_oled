@@ -41,13 +41,39 @@ static uint8_t mod;
 	UG_FontSelect(&FONT_22X36);
 	if(dt->index==0){
 		mod=0;
-		sprintf(buf, "%.2f", dt->dc);
+	if((dt->dc<-1000)||(dt->dc)>1000){
+						sprintf(buf, "%.1f", dt->dc);
+					}
+					else if((dt->dc<-100)||(dt->dc>100)){
+					sprintf(buf, "%.2f", dt->dc);}
+					else{
+					sprintf(buf, "%.3f", dt->dc);
+					}
+//		sprintf(buf, "%.2f", dt->dc);
+
+
+
 	}else if(dt->Trms>10){
 		mod=1;
-		sprintf(buf, "%.2f", dt->Trms);
+
+		if(dt->Trms<10){
+					sprintf(buf, "%.4f", dt->Trms);
+				}
+				else if((dt->Trms>10)&&(dt->Trms<100)){
+				sprintf(buf, "%.3f", dt->Trms);}
+				else{
+				sprintf(buf, "%.2f", dt->Trms);
+				}
 	}else{
 		mod=2;
-		sprintf(buf, "%.2f", dt->Vrms);
+		if(dt->Vrms<10){
+					sprintf(buf, "%.4f", dt->Vrms);
+				}
+				else if((dt->Vrms>10)&&(dt->Vrms<100)){
+				sprintf(buf, "%.3f", dt->Vrms);}
+				else{
+				sprintf(buf, "%.2f", dt->Vrms);
+				}
 	}
 
 	UG_PutString(0, 5, buf);

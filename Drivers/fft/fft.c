@@ -48,7 +48,7 @@ if((max_result/FFT_SIZE>15000)&&(amp!=0)){
 float32_t ma=170,md=11.4;
 dt->Vpp=(rms/ma)/powf(2,amp);
 dt->Vamp=dt->Vpp/2;
-dt->Vrms=dt->Vpp/2/1.41;
+dt->Vrms=dt->Vpp/2/1.41f;
 spi_txrx(AD_CR_CR_W);
 spi_txrx(amp);
 spi_txrx(0x90);
@@ -64,7 +64,7 @@ dt->dc = (ad7792_data_get() - 32768)/powf(2,amp)/md;
 	spi_txrx(AD_CR_MR_W);
 	spi_txrx(0x00);
 	spi_txrx(0x0A);
-	dt->Trms = (ad7792_data_get()/121.36);
+	dt->Trms = (ad7792_data_get()/121.36f);
 
 
 	dt->A=amp;
