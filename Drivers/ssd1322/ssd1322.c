@@ -64,7 +64,7 @@ void lcd_init(void)
      lcd_WriteData(0x9F); // = 0x7F - default
 
      lcd_WriteCMD(0xC7); // Master Contrast Current Control
-     lcd_WriteData(0x0F);
+     lcd_WriteData(0x00);
 
      lcd_WriteCMD(0xB9); /** Сбрасывает таблицу градаций яркости в состояние по умолчанию (линейная таблица с нарастанием яркости от GS0 до GS1) */
 
@@ -76,7 +76,7 @@ void lcd_init(void)
      lcd_WriteData(0x20); // 0x20 = as-is
 
      lcd_WriteCMD(0xBB); // Set Pre-charge voltage
-     lcd_WriteData(0x1F); // 0x17 = default; 0x1F = 0.60*Vcc (spec example)
+     lcd_WriteData(0x10); // 0x17 = default; 0x1F = 0.60*Vcc (spec example)
 
      lcd_WriteCMD(0xB6); // Set Second Precharge Period
      lcd_WriteData(0x08); // 0x08 = 8 dclks (default)
@@ -107,6 +107,7 @@ switch(x%2) // patch the nibble with the pixel color
 {
 case 0: buff[p] &= 0x0F; buff[p] |= (b << 4); break;
 case 1: buff[p] &= 0xF0; buff[p] |= b; break;
+default : break;
 }
 }
 

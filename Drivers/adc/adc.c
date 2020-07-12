@@ -16,9 +16,10 @@ void adc_init(void)
 {
    RCC->AHBENR|=RCC_AHBENR_GPIOAEN;
    GPIOA->MODER|=(GPIO_MODER_MODER0|GPIO_MODER_MODER1|GPIO_MODER_MODER2|GPIO_MODER_MODER3|GPIO_MODER_MODER4);
-  RCC->CFGR2 |=RCC_CFGR2_ADCPRE12_DIV1;
+  RCC->CFGR2 |=RCC_CFGR2_ADCPRE12_DIV2;
   Delay_ms(1);
   RCC->AHBENR|=RCC_AHBENR_ADC12EN;
+
   ADC1->CR &= ~(uint32_t)0xFF;
   ADC1->CR &= ~ADC_CR_ADVREGEN;
   ADC1->CR |= ADC_CR_ADVREGEN_1;
@@ -45,17 +46,19 @@ if((ADC1->CR&ADC_CR_ADEN)==0)
 //    ADC2->CR |= ADC_CR_ADEN;
 //    while(!(ADC2->ISR & ADC_ISR_ADRDY));
 
+  ADC12_COMMON->CCR|=ADC_CCR_VBATEN|ADC_CCR_VREFEN;
+ ADC1->SQR1&=~ADC_SQR1_L_Msk;
+  ADC1->SQR1 |= ADC_SQR1_L_0;
+ ADC1->SQR1 |= (ADC_SQR1_SQ1_0|ADC_SQR1_SQ1_4|ADC_SQR1_SQ2_1|ADC_SQR1_SQ2_4);
 
-  ADC1->SQR1 &=~ (ADC_SQR1_L_Msk);
- ADC1->SQR1 |= (ADC_SQR1_SQ1_0|ADC_SQR1_SQ1_1);
- ADC1->SMPR1|=ADC_SMPR1_SMP3;
- ADC1->CFGR |=(ADC_CFGR_DMACFG|ADC_CFGR_DMAEN|ADC_CFGR_EXTEN_0|ADC_CFGR_EXTSEL_0 \
-		 |ADC_CFGR_EXTSEL_2|ADC_CFGR_EXTSEL_3);
- ADC1->CR |= ADC_CR_ADSTART;
-  RCC->APB1ENR|=RCC_APB1ENR_DAC1EN;
-  DAC->CR |= DAC_CR_BOFF1|DAC_CR_EN1;
-  DAC->DHR12R1=450;
- // dma_init();
+ ADC1->SMPR2|=ADC_SMPR2_SMP17_Msk|ADC_SMPR2_SMP18_Msk;
+
+ ADC1->CFGR |=(ADC_CFGR_DMACFG|ADC_CFGR_DMAEN);//|ADC_CFGR_CONT);
+
+ // RCC->APB1ENR|=RCC_APB1ENR_DAC1EN;
+//  DAC->CR |= DAC_CR_BOFF1|DAC_CR_EN1;
+//  DAC->DHR12R1=450;
+  dma_init();
 }
 
 void dma_init(void){
@@ -63,7 +66,7 @@ void dma_init(void){
   DMA1_Channel1->CPAR = (uint32_t) &ADC1->DR;
   DMA1_Channel1->CMAR = (uint32_t)adc_buff;
   DMA1_Channel1->CCR &= ~DMA_CCR_DIR;
-  DMA1_Channel1->CNDTR = FFT_SIZE;
+  DMA1_Channel1->CNDTR = DMA_BUFF_SIZE;
   DMA1_Channel1->CCR &= ~DMA_CCR_PINC;
   DMA1_Channel1->CCR |= DMA_CCR_MINC;
   DMA1_Channel1->CCR |= DMA_CCR_PSIZE_0;
@@ -71,8 +74,8 @@ void dma_init(void){
   DMA1_Channel1->CCR |= DMA_CCR_PL;
   DMA1_Channel1->CCR |= DMA_CCR_CIRC|DMA_CCR_TCIE;
   DMA1_Channel1->CCR |= DMA_CCR_EN;
-NVIC_EnableIRQ(DMA1_Channel1_IRQn);
-tim6_adc_init();
+//NVIC_EnableIRQ(DMA1_Channel1_IRQn);
+//tim6_adc_init();
 
 }
 void tim6_adc_init(void)
@@ -114,6 +117,23 @@ uint64_t adcB=0;
 
     return Result;
 
+}
+
+float32_t vbat(void){
+static uint16_t j;
+	ADC1->CR |= ADC_CR_ADSTART;
+	static long Adc0, AdcF;
+	adc1_value=(adc_buff[0]<<1)*1230/adc_buff[1];
+	if(j<24){
+		j++;
+	Adc0 +=adc1_value;
+	}
+	else{
+		j=0;
+		AdcF =Adc0/24;
+		Adc0=0;
+	}
+	return AdcF;
 }
 
 void opamp_init(void){

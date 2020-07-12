@@ -12,6 +12,7 @@ typedef struct {
 	float32_t Vamp;
 	float32_t Trms;
 	float32_t max;
+	float32_t bat;
 	float32_t fft_Dbuff[FFT_SIZE];
 	uint8_t A;
 	uint8_t index;

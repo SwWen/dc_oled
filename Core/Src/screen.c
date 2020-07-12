@@ -126,10 +126,10 @@ static uint8_t mod;
 
 
 	UG_FontSelect(&FONT_6X10);
-	sprintf(buf, "\n%.2f", dt->Vamp);
+	sprintf(buf, "\n%.2f", dt->bat);
 	UG_PutString(150, 44, buf);
 	UG_FontSelect(&FONT_8X14);
-	sprintf(buf, "Va");
+	sprintf(buf, "bat");
 	UG_PutString(150, 40, buf);
 
 

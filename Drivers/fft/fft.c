@@ -69,7 +69,7 @@ dt->dc = (ad7792_data_get() - 32768)/powf(2,amp)/md;
 
 	dt->A=amp;
 	dt->index=max_index;
-
+	dt->bat=vbat()*0.001f;
 //return dt;
 }
 

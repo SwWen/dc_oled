@@ -7,10 +7,11 @@
 
 #ifndef ADC_ADC_H_
 #define ADC_ADC_H_
-#define  DMA_BUFF_SIZE 100
+#define  DMA_BUFF_SIZE 2
 #include "fft.h"
 int16_t adc_value(void);
 void opamp_init(void);
 void adc_init(void);
-int16_t  adc_buff[FFT_SIZE];
+float32_t vbat(void);
+int16_t  adc_buff[DMA_BUFF_SIZE];
 #endif /* ADC_ADC_H_ */

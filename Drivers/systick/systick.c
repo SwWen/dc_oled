@@ -14,6 +14,7 @@ extern uint32_t SysTick_Config(uint32_t ticks);
 void systick_init(void){
   FLASH->KEYR = 0x45670123;
   FLASH->KEYR = 0xCDEF89AB;
+//  SCB->CPACR |= ((3UL << 10*2)|(3UL << 11*2)); /* set CP10 and CP11 Full Access */
   unsigned long int TimeOut = 10000;
 
   RCC->CR   |=  RCC_CR_HSEON;
